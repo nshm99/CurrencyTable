@@ -30,11 +30,30 @@ class Table extends Component {
          if (this.state.items.length === 30) {
             this.state.items.pop()
          }
-         if (this.state.reversedItems.length === 30) {
-            this.state.reversedItems.pop()
-         }
-         this.setState({ items: [[message, date, mnt], ...this.state.items] })
+        this.setState({ items: [[message, date, mnt], ...this.state.items] })
+         this.updatePlus()
+         this.setAvg()
       }
+   }
+
+   updatePlus() {
+      this.setState({sum:0,count:0})
+      return this.state.items.map((item, index) => {
+
+         var moment = require('moment')
+         var end = moment(this.state.items[0][1].split(' ')[0],"HH:mm:ss")
+         var duration = end.diff(moment(item[1].split(' ')[0],"HH:mm:ss"),'seconds')
+
+         if (duration <= 60) {
+            this.setState({ sum: this.state.sum + parseInt(item[0].substring(0, item[0].length - 1)) })
+            this.setState({ count: this.state.count + 1 })
+         }
+      })
+
+   }
+
+   async setAvg(){
+      await this.setState({ave : this.state.sum/this.state.count})
    }
 
    constructor(props) {
@@ -42,6 +61,8 @@ class Table extends Component {
       this.state = {
          items: [],
          ave:-1,
+         sum: 0,
+         count: 0,
       }
 
    }
@@ -74,7 +95,7 @@ class Table extends Component {
             <h1 id='title'>React Dynamic Table</h1>
             { this.state.ave === -1 ?
             <h2 id='avrage'>میانگین : داده‌ای وجود ندارد</h2> :
-            <h2 id='avrage'>: میانگین {this.state.ave}</h2>}
+            <h2 id='avrage'>میانگین {this.state.ave}</h2>}
             <table id='items'>
                <tbody>
                   <tr>{this.renderTableHeader()}</tr>
