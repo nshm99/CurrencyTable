@@ -4,6 +4,39 @@ import './TableStyle.css'
 
 class Table extends Component {
 
+   ws = new WebSocket("ws://localhost:8080")
+   componentDidMount() {
+
+      this.ws.onopen = () => {
+         this.ws.send("");
+         console.log('connected')
+      }
+
+      this.ws.onmessage = evt => {
+         console.log(evt.data)
+         const message = evt.data
+         var moment = require('moment')
+         this.addMessage(message, moment().format("HH:mm:SS YYYY MM"), moment())
+
+      }
+
+      this.ws.onclose = () => {
+         alert("Socket Closed by Server");
+      }
+   }
+
+   addMessage(message, date, mnt) {
+      if (!isNaN(+message.substring(0, message.length - 1))) {
+         if (this.state.items.length === 30) {
+            this.state.items.pop()
+         }
+         if (this.state.reversedItems.length === 30) {
+            this.state.reversedItems.pop()
+         }
+         this.setState({ items: [[message, date, mnt], ...this.state.items] })
+      }
+   }
+
    constructor(props) {
       super(props)
       this.state = {
