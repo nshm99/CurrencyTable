@@ -1,0 +1,33 @@
+#title {
+    text-align: center;
+    font-family: arial, sans-serif;
+  }
+  
+  #items {
+    text-align: center;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    border: 3px solid rgb(52, 54, 141);
+    width: 100%;
+  }
+  
+  #items td, #items th {
+    border: 1px solid rgb(7, 8, 32);
+    padding: 8px;
+    color: black;
+  }
+  
+  #items tr{background-color: #c0c1e7;}
+  
+  #items tr:hover {background-color: rgb(135, 139, 190);}
+  
+  #items th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: rgb(80, 56, 165);
+    color: rgb(27, 20, 20);
+  }
+  #avrage{
+    color: black;
+  }
